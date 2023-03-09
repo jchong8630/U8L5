@@ -121,6 +121,45 @@ public class Encryptor
      */
     public String decryptMessage(String encryptedMessage)
     {
-        /* to be implemented in part (d) */
+        String result = "";
+        String str = encryptedMessage;
+        int numLetters = numCols * numRows;
+        int repetitions = str.length() / numLetters;
+        int count = 0;
+        for (int i = 0; i < repetitions + 1; i++){
+            if (!(str.equals(""))){
+                decryptFill(str);
+                for (int j = 0; j < letterBlock.length; j++){
+                    for (int k = 0; k < letterBlock[0].length; k++){
+                        result += letterBlock[j][k];
+                    }
+                }
+            }
+            if (count < repetitions){
+                str = str.substring(numLetters);
+                count++;
+            }
+        }
+        for (int i = result.length() - 1; i >= 0; i--){
+            if (result.charAt(i) == 'A'){
+                result = result.substring(0,i);
+            }
+            else{
+                break;
+            }
+        }
+        return result;
     }
+
+    public void decryptFill(String str){
+        int index = 0;
+        for (int y = 0; y < numCols; y++) {
+                for (int x = 0; x < numRows; x++) {
+                    if (index < str.length()) {
+                        letterBlock[x][y] = str.substring(index, index + 1);
+                    }
+                    index++;
+                }
+            }
+        }
 }
